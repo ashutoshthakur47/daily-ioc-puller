@@ -436,7 +436,7 @@ def print_ioc_sheet(rows, *, search_filter: str = None):
         rows = [r for r in rows if search_filter in (r.get("malware_name") or "").lower()]
     
     print(f"\n{'='*80}")
-    print(f"  IOC REPORT FOR OFFICE SHEET  |  {NOW.strftime('%Y-%m-%d %H:%M UTC')}")
+    print(f"  IOC REPORT  |  {NOW.strftime('%Y-%m-%d %H:%M UTC')}")
     print(f"  Window: Last 24 hours  |  Families: {len(rows)}")
     print(f"{'='*80}")
     
