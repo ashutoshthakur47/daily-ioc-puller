@@ -30,7 +30,7 @@ Pull the latest Indicators of Compromise (IOCs) from multiple threat intelligenc
 ### 1. Clone & install dependencies
 
 ```bash
-git clone https://github.com/yourusername/daily-ioc-puller.git
+git clone https://github.com/ashutoshthakur47/daily-ioc-puller.git
 cd daily-ioc-puller
 pip install -r requirements.txt
 ```
