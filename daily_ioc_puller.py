@@ -45,9 +45,13 @@ def safe_get(url: str, *, headers=None, params=None, timeout: int = 20):
         return {}
 
 
-def safe_post(url: str, payload: dict, *, headers=None, timeout: int = 20):
+def safe_post(url: str, payload: dict, *, headers=None, timeout: int = 20, use_form_data: bool = False):
+    """POST request - JSON by default, form-encoded if use_form_data=True."""
     try:
-        r = requests.post(url, json=payload, headers=headers, timeout=timeout)
+        if use_form_data:
+            r = requests.post(url, data=payload, headers=headers, timeout=timeout)
+        else:
+            r = requests.post(url, json=payload, headers=headers, timeout=timeout)
         r.raise_for_status()
         ct = (r.headers.get("content-type") or "").lower()
         if "application/json" in ct:
@@ -187,6 +191,7 @@ def pull_malwarebazaar(merged):
             "https://mb-api.abuse.ch/api/v1/",
             {"query": "get_recent", "selector": "time"},
             headers=abusech_headers(),
+            use_form_data=True,  # MalwareBazaar requires form-encoded POST
         )
         count = 0
         entries = data.get("data") or []
