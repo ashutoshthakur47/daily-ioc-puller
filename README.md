@@ -172,7 +172,7 @@ MIT
 
 ## Contributing
 
-Issues and pull requests welcome. For security issues, please email privately instead of posting publicly.
+Issues and pull requests welcome.
 
 ## Disclaimer
 
