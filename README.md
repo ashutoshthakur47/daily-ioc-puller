@@ -9,7 +9,6 @@ Pull the latest Indicators of Compromise (IOCs) from multiple threat intelligenc
 - **Multiple IOC types** - IPs, domains, URLs, hashes, CVEs all in one view
 - **Office-ready output** - copy/paste IOCs directly into spreadsheets
 - **Filter by malware** - search for specific threats by name
-- **Quick summary** - see at a glance what you're tracking
 - **No file clutter** - prints to terminal, no Excel nonsense
 
 ## Data Sources
@@ -89,7 +88,6 @@ Shows all malware families with:
 - Last seen timestamp
 - Source(s)
 - All IPs/domains/hashes listed one per line
-- CVE references
 
 ### Quick summary (table view)
 ```bash
@@ -112,10 +110,6 @@ python daily_ioc_puller.py --list
 
 Just shows the names of discovered families
 
-### Save output to file
-```bash
-python daily_ioc_puller.py > todays_iocs.txt
-```
 
 ## Example Output
 
@@ -145,43 +139,12 @@ Simply select and copy the IOCs you need, paste into your tracking sheet.
 
 ## How It Works
 
-1. **Pulls data** from all 4 sources in parallel
+1. **Pulls data** from all 4 sources
 2. **Normalizes** entry formats (different APIs return different structures)
 3. **Merges** all IOCs for the same malware into one entry
 4. **Deduplicates** - if multiple sources report the same IOC, it's shown once
 5. **Sorts** by malware name alphabetically
 6. **Displays** in clean, copy-paste format
-
-## Error Handling
-
-If any source fails or returns bad data:
-- Script continues (doesn't crash)
-- Warning shown: `[WARN] GET failed: ...`
-- Partial results displayed
-
-No API key? Script adapts:
-- Without `ABUSECH_AUTH_KEY`: abuse.ch sources return 401 (skipped)
-- Without `OTX_API_KEY`: OTX is skipped, other sources work fine
-
-## Daily Automation (Optional)
-
-### Windows Task Scheduler
-```batch
-# Create a .bat file (e.g., run_ioc_puller.bat)
-@echo off
-set ABUSECH_AUTH_KEY=your_key_here
-set OTX_API_KEY=your_key_here
-cd C:\path\to\daily-ioc-puller
-python daily_ioc_puller.py --summary >> logs\ioc_log.txt
-```
-
-Then schedule in Task Scheduler to run daily.
-
-### Linux/Mac Cron
-```bash
-# Edit crontab: crontab -e
-0 8 * * * export ABUSECH_AUTH_KEY="..." && export OTX_API_KEY="..." && cd /path/to/daily-ioc-puller && python daily_ioc_puller.py --summary >> logs/ioc_log.txt
-```
 
 ## Troubleshooting
 
